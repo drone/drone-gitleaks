@@ -6,8 +6,8 @@ steps:
 - name: build
   image: golang:1.16
   commands:
-  - go build
   - go test ./...
+  - sh scripts/build.sh
 
 - name: publish
   image: plugins/docker
