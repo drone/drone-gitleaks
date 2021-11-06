@@ -34,7 +34,6 @@ func Exec(ctx context.Context, args Args) error {
 		logrus.WithError(err).Warnln("Cannot generate temporary file")
 		return err
 	}
-	defer os.Remove(file.Name())
 
 	cmd := exec.Command("gitleaks", "--path="+args.Path, "--commit="+args.Commit.Rev, "--report="+file.Name())
 	cmd.Stderr = os.Stderr
@@ -49,7 +48,7 @@ func Exec(ctx context.Context, args Args) error {
 
 	// read the generated report and unmarshal
 	dat := []match{}
-	out, ferr := ioutil.ReadFile("/tmp/report.json")
+	out, ferr := ioutil.ReadFile(file.Name())
 	if ferr != nil {
 		logrus.WithError(ferr).Warnln("Cannot read report")
 	}
