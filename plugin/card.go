@@ -13,7 +13,7 @@ import (
 func (args Args) writeCard(dat []match) error {
 	result, _ := json.Marshal(CardIssues{Issues: dat})
 	card := drone.CardInput{
-		Schema: "https://drone-plugins.github.io/drone-gitleaks/card.json",
+		Schema: "https://drone.github.io/drone-gitleaks/card.json",
 		Data:   result,
 	}
 	writeCard(args.CardFilePath, &card)
