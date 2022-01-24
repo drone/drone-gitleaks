@@ -73,7 +73,7 @@ func Exec(ctx context.Context, args Args) error {
 	}
 
 	if len(dat) != 0 {
-		if err := args.writeCard(dat); err != nil {
+		if err := args.writeCard(reacted); err != nil {
 			fmt.Printf("Could not create adaptive card. %s\n", err)
 		}
 	}

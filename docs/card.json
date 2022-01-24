@@ -67,7 +67,9 @@
               "title": "Date:",
               "value": "${date}"
             }
-          ]
+          ],
+          "separator": true,
+          "$data": "${issues}"
         }]
       }]
     }
