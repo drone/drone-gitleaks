@@ -1,77 +1,87 @@
 {
   "type": "AdaptiveCard",
-  "body": [{
-    "type": "ColumnSet",
-    "columns": [{
-      "type": "Column",
-      "items": [{
-        "type": "Image",
-        "url": "https://www.kindpng.com/picc/m/356-3561262_free-download-png-and-vector-icon-logo-git.png",
-        "size": "Small"
-      }],
-      "width": "auto"
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://www.kindpng.com/picc/m/356-3561262_free-download-png-and-vector-icon-logo-git.png",
+              "size": "Small"
+            }
+          ],
+          "width": "auto"
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Plugin: Gitleaks",
+              "wrap": true,
+              "size": "Small",
+              "weight": "Bolder",
+              "isSubtle": false,
+              "spacing": "Small"
+            }
+          ],
+          "width": "stretch"
+        }
+      ],
+      "style": "default"
     },
-      {
-        "type": "Column",
-        "items": [{
-          "type": "TextBlock",
-          "text": "Plugin: Gitleaks",
-          "wrap": true,
-          "size": "Small",
-          "weight": "Bolder",
-          "isSubtle": false,
-          "spacing": "Small"
-        }],
-        "width": "stretch"
-      }
-    ],
-    "style": "default"
-  },
     {
       "type": "ColumnSet",
       "style": "default",
       "separator": true,
-      "columns": [{
-        "type": "Column",
-        "items": [{
-          "type": "FactSet",
-          "facts": [{
-            "title": "Line:",
-            "value": "${formatNumber(lineNumber, 0)}"
-          },
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
             {
-              "title": "Commit:",
-              "value": "${commit}"
-            },
-            {
-              "title": "Rule:",
-              "value": "${rule}"
-            },
-            {
-              "title": "Commit:",
-              "value": "${commitMessage}"
-            },
-            {
-              "title": "Author:",
-              "value": "${author}"
-            },
-            {
-              "title": "Email:",
-              "value": "${email}"
-            },
-            {
-              "title": "File:",
-              "value": " ${file}"
-            },
-            {
-              "title": "Date:",
-              "value": "${date}"
+              "type": "FactSet",
+              "facts": [
+                {
+                  "title": "Line:",
+                  "value": "${formatNumber(lineNumber, 0)}"
+                },
+                {
+                  "title": "Commit:",
+                  "value": "${commit}"
+                },
+                {
+                  "title": "Rule:",
+                  "value": "${rule}"
+                },
+                {
+                  "title": "Commit:",
+                  "value": "${commitMessage}"
+                },
+                {
+                  "title": "Author:",
+                  "value": "${author}"
+                },
+                {
+                  "title": "Email:",
+                  "value": "${email}"
+                },
+                {
+                  "title": "File:",
+                  "value": " ${file}"
+                },
+                {
+                  "title": "Date:",
+                  "value": "${date}"
+                }
+              ]
             }
           ],
-          "separator": true,
-          "$data": "${issues}"
-        }]
-      }]
+          "width": "auto"
+        }
+      ]
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
