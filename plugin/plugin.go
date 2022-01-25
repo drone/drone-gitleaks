@@ -7,6 +7,7 @@ package plugin
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -19,15 +20,18 @@ type Args struct {
 	Pipeline
 
 	// Level defines the plugin log level.
-	Level string `envconfig:"PLUGIN_LOG_LEVEL"`
+	Level        string `envconfig:"PLUGIN_LOG_LEVEL"`
+	Path         string `envconfig:"PLUGIN_PATH" default:"."`
+	Conf         string `envconfig:"PLUGIN_CONFIG"`
+	CardFilePath string `envconfig:"DRONE_CARD_PATH"`
+}
 
-	Path string `envconfig:"PLUGIN_PATH" default:"."`
-	Conf string `envconfig:"PLUGIN_CONFIG"`
+type CardIssues struct {
+	Issues []match
 }
 
 // Exec executes the plugin.
 func Exec(ctx context.Context, args Args) error {
-
 	// generate a temp file to store the report
 	file, err := ioutil.TempFile("", "gitleaks")
 	if err != nil {
@@ -49,6 +53,9 @@ func Exec(ctx context.Context, args Args) error {
 	// read the generated report and unmarshal
 	dat := []match{}
 	out, ferr := ioutil.ReadFile(file.Name())
+	if len(out) == 0 {
+		return nil
+	}
 	if ferr != nil {
 		logrus.WithError(ferr).Warnln("Cannot read report")
 	}
@@ -56,9 +63,19 @@ func Exec(ctx context.Context, args Args) error {
 		logrus.WithError(jsonerr).Warnln("Cannot unmarshal report")
 	}
 
+	reacted := []match{}
 	// loop through and print each violation
 	for _, match := range dat {
+		match.Line = "*****"
+		match.Offender = "*****"
 		logrus.Errorf("%s violation in %q at line %d\n", match.Rule, match.File, match.Linenumber)
+		reacted = append(reacted, match)
+	}
+
+	if len(dat) != 0 {
+		if err := args.writeCard(reacted); err != nil {
+			fmt.Printf("Could not create adaptive card. %s\n", err)
+		}
 	}
 
 	return err
