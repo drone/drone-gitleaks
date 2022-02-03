@@ -26,8 +26,9 @@ type Args struct {
 	CardFilePath string `envconfig:"DRONE_CARD_PATH"`
 }
 
-type CardIssues struct {
-	Issues []match
+type Card struct {
+	NumIssues int     `json:"NumIssues"`
+	Issues    []match `json:"Issues"`
 }
 
 // Exec executes the plugin.
@@ -53,29 +54,29 @@ func Exec(ctx context.Context, args Args) error {
 	// read the generated report and unmarshal
 	dat := []match{}
 	out, ferr := ioutil.ReadFile(file.Name())
-	if len(out) == 0 {
-		return nil
-	}
 	if ferr != nil {
 		logrus.WithError(ferr).Warnln("Cannot read report")
 	}
 	if jsonerr := json.Unmarshal(out, &dat); jsonerr != nil {
-		logrus.WithError(jsonerr).Warnln("Cannot unmarshal report")
+		logrus.WithError(jsonerr).Warnln("Cannot unmarshal report, ignore if 'No leaks found'")
 	}
 
-	reacted := []match{}
+	issues := []match{}
 	// loop through and print each violation
 	for _, match := range dat {
 		match.Line = "*****"
 		match.Offender = "*****"
 		logrus.Errorf("%s violation in %q at line %d\n", match.Rule, match.File, match.Linenumber)
-		reacted = append(reacted, match)
+		issues = append(issues, match)
 	}
 
-	if len(dat) != 0 {
-		if err := args.writeCard(reacted); err != nil {
-			fmt.Printf("Could not create adaptive card. %s\n", err)
-		}
+	cardData := Card{
+		NumIssues: len(issues),
+		Issues:    issues,
+	}
+
+	if err := args.writeCard(cardData); err != nil {
+		fmt.Printf("Could not create adaptive card. %s\n", err)
 	}
 
 	return err

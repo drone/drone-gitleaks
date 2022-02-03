@@ -10,8 +10,8 @@ import (
 	"github.com/drone/drone-go/drone"
 )
 
-func (args Args) writeCard(dat []match) error {
-	result, _ := json.Marshal(CardIssues{Issues: dat})
+func (args Args) writeCard(data Card) error {
+	result, _ := json.Marshal(data)
 	card := drone.CardInput{
 		Schema: "https://drone.github.io/drone-gitleaks/card.json",
 		Data:   result,

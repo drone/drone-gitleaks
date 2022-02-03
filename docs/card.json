@@ -10,7 +10,7 @@
             {
               "type": "Image",
               "url": "https://www.kindpng.com/picc/m/356-3561262_free-download-png-and-vector-icon-logo-git.png",
-              "size": "Small"
+              "size": "small"
             }
           ],
           "width": "auto"
@@ -22,9 +22,18 @@
               "type": "TextBlock",
               "text": "Plugin: Gitleaks",
               "wrap": true,
-              "size": "Small",
-              "weight": "Bolder",
+              "size": "small",
+              "weight": "bolder",
               "isSubtle": false,
+              "spacing": "small"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Number of Issues: ${NumIssues}",
+              "wrap": true,
+              "size": "Small",
+              "weight": "Lighter",
+              "isSubtle": true,
               "spacing": "Small"
             }
           ],
