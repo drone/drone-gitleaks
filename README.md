@@ -28,3 +28,7 @@ docker run --rm \
   -v $(pwd):/drone/src \
   plugins/gitleaks
 ```
+
+# Developing locally
+
+You will need to install gitleaks, and have it on your path to run the plugin in debug mode.
