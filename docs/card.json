@@ -54,6 +54,10 @@
               "type": "FactSet",
               "facts": [
                 {
+                  "title": "File:",
+                  "value": "${file}"
+                },
+                {
                   "title": "Line:",
                   "value": "${formatNumber(lineNumber, 0)}"
                 },
@@ -76,10 +80,6 @@
                 {
                   "title": "Email:",
                   "value": "${email}"
-                },
-                {
-                  "title": "File:",
-                  "value": " ${file}"
                 },
                 {
                   "title": "Date:",
